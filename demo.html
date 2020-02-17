@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Physics Demo</title>
+	<meta charset="utf-8"/>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+	<script type="text/javascript" src="vector.js"></script>
+
+	<script type="text/javascript" src="engine/particle.js"></script>
+	<script type="text/javascript" src="engine/physics.js"></script>
+
+	<script type="text/javascript" src="behaviour/behaviour.js"></script>
+	<script type="text/javascript" src="behaviour/constant_force.js"></script>
+	<script type="text/javascript" src="behaviour/attraction.js"> </script>
+	<script type="text/javascript" src="behaviour/collision.js"> </script>
+
+	<script type="text/javascript" src="demos/attraction_demo.js"> </script>
+	<script type="text/javascript" src="demos/collision_demo.js"> </script>
+	<script type="text/javascript" src="demos/messy_demo.js"> </script>
+
+
+
+	<script type="text/javascript" src="renderer/webglrend.js"></script>
+
+</head>
+	<body>
+
+		<h1 style="text-align: center;">Welcome to a simple demo of my physics library (Work in Progress)</h1>
+		<br>
+		<p style="text-align: center;">The following are some quick demos to demonstrate the functionality of the library</p>
+		<br>
+
+		<h3>Central Attraction Demo: All Particles are the Same Mass, No collisions</h3>
+		<canvas id="demo1" width="640" height="480" > </canvas>
+		<h3>Collision Demo: Two Particles of Identical Masses With a Central Attraction</h3>
+		<canvas id="demo2" width="640" height="480" > </canvas>
+		<h3>Messy Demo: Collision, Central Attraction, Many Particles of Varying Masses</h3>
+		<canvas id="demo3" width="640" height="480" > </canvas>
+
+		<script type="text/javascript">
+			//create and initialize the demos
+			demo1 = new attraction_demo("demo1");
+			demo2 = new collision_demo("demo2");
+			demo3 = new messy_demo("demo3");
+
+			//create functions to "draw" each demo such that window can request animation frame
+			function drawDemo1() {
+				demo1.draw()
+				window.requestAnimationFrame(drawDemo1)
+			}
+
+			function drawDemo2() {
+				demo2.draw()
+				window.requestAnimationFrame(drawDemo2)
+			}
+
+			
+			function drawDemo3() {
+				demo3.draw()
+				window.requestAnimationFrame(drawDemo3)
+			}
+			
+			//start drawing each demo
+			drawDemo1()
+			drawDemo2()
+			drawDemo3()
+
+		</script>
+
+
+		
+		
+
+	</body>
+</html>

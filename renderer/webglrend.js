@@ -1,6 +1,6 @@
-var webglrend = {}
+var Webglrend = {}
 
-webglrend = (function(canvas) {		
+Webglrend = (function(canvas) {		
 	const gl = canvas.getContext("webgl");
 	if (gl === null) {
 		alert("Oh no");

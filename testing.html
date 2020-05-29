@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+		<script type="text/javascript" src="vector.js"></script>
+
+		<script type="text/javascript" src="engine/particle.js"></script>
+		<script type="text/javascript" src="engine/boundary.js"></script>
+		<script type="text/javascript" src="engine/physics.js"></script>
+
+		<script type="text/javascript" src="behaviour/behaviour.js"></script>
+		<script type="text/javascript" src="behaviour/pool-behaviour.js"> </script>
+		<script type="text/javascript" src="behaviour/constant-force.js"></script>
+		<script type="text/javascript" src="behaviour/attraction.js"> </script>
+		<script type="text/javascript" src="behaviour/collision.js"> </script>
+
+
+
+		<script type="text/javascript" src="renderer/webglrend.js"></script>
+	</head>
+	
+	<body onload="main()">
+		<script id="2d-vertex-shader" type="nonjs">
+			precision mediump float;
+
+			attribute vec2 a_position;
+
+			attribute float a_radius;
+
+			uniform vec2 u_resolution;
+
+			varying vec4 v_color;
+
+			void main() {
+				vec2 zeroToOne = a_position / u_resolution;
+
+				vec2 zeroToTwo = zeroToOne * 2.0;
+				
+				vec2 clipSpace = zeroToTwo - 1.0;
+
+				gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);	
+
+				gl_PointSize = a_radius*2.0;
+
+				v_color = gl_Position * 0.9 + 0.5;	
+			}
+		</script>
+
+		<script id="2d-fragment-shader" type="nonjs">
+			precision mediump float;
+
+			uniform vec4 u_color;
+
+			varying vec4 v_color;
+
+			void main() {
+				gl_FragColor = v_color;
+			}
+		</script>
+
+		<script type="text/javascript">
+
+
+			function main() {
+				//a = new vector()
+
+				//console.log(vector.add(new vector(12, 12), new vector(12, 12)))
+				test = new Boundary([new vector(50, 50), new vector])
+				console.log(test.normalAxis)
+
+
+				const canvas = document.querySelector("#cont");
+
+				var ohno = new Webglrend(canvas);
+				ohno.init();
+
+				phys = new Physics();
+
+				c = new ConstantForce(new vector(-0.1, 0));
+				c1 = new ConstantForce(new vector(0.1, 0));
+				a1 = new Attraction(1, 5000, new vector(320, 240))
+				//a1 = new attraction(100, 1000, new vector(320,240));
+				col = new InterParticleCollision();
+
+				worldBoundCol = new StaticBoundParticleCollision();
+
+				//worldBoundCol.worldBounds = new vector(640, 480)
+
+				//console.log(col)
+
+				phys.poolBehaviours.push(col)
+				phys.poolBehaviours.push(worldBoundCol)
+
+				for (var i = 0; i < 1; i++) {
+					tempParticle = new Particle(1,10)
+					tempParticle.behaviours.push()
+
+					tempParticle.color = [Math.random()*(1-0.5)+0.5,Math.random()*(1-0.5)+0.5,Math.random(),1].toString()
+
+					phys.particles.push(tempParticle)
+
+					col.pool.push(tempParticle)
+					worldBoundCol.pool.push(tempParticle)
+				}
+
+				worldBoundCol.boundPool.push([new vector(495, 480), new vector(495,0)])
+
+
+
+				phys.particles[0].velocity = new vector(-1,0)
+				//phys.particles[1].velocity = new vector(-0.5,0)
+
+				phys.particles[0].pos = new vector(500, 240);
+
+				/*phys.particles[4].pos = new vector(300, 220);
+				phys.particles[5].pos = new vector(320, 220);
+				phys.particles[1].pos = new vector(290, 240);
+
+				phys.particles[2].pos = new vector(330, 240);
+				phys.particles[3].pos = new vector(310, 240);*/
+
+
+				function draw() { 
+					
+					//console.log(vector.mag(phys.particles[0].velocity))
+					phys.step()
+					ohno.render(phys.particles)
+					window.requestAnimationFrame(draw) 					
+				}
+
+				draw()
+			}
+
+		</script>
+
+		<div>
+			<canvas id="cont" width="640" height="480" > </canvas>
+		</div>
+	</body>
+</html>

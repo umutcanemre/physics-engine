@@ -1,35 +1,28 @@
 //apply a positive/negative force to particles based on their position relative to the "attraction"
-attraction = function (strength, radius, pos) {
-	this.strength = strength || null;
-	this.pos = pos || new vector();
-	this.radius = 1000 || radius;
+class Attraction {
 
-
-	//store "radiusSq" as to avoid squaring the radius needlessly for every apply call
-	this.radiusSq = this.radius * this.radius
-
-	this.setPos = function(newVec) {
-		this.pos = newVec;
+	constructor(strength, radius, pos) {
+		this.strength = strength || null;
+		this.pos = pos || new vector();
+		this.r = 1000 || radius;
+		//set radiusSq to avoid needlessly computing the radius squared
+		this.rSq = this.r * this.r
 	}
 
-	this.setStrength = function(strength) {
-		this.strength = strength;
+	set radius(r) {
+		this.r = r
+		this.rSq = r*r
 	}
 
-	this.setRadius = function(radius) {
-		this.radius = radius;
-		this.radiusSq = radius*radius;
-	}
-
-	this.apply = function(particle) {		
+	apply(particle) {		
 		//calculate distance between attraction and particle
-		distVec = vector.subtract(this.pos, particle.pos);
+		let distVec = vector.subtract(this.pos, particle.pos);
 
 		//normalize distance vector
 		distVec.normalize()
 
 		//multiply distance vector by 1 - the squared magnitude of distance vector over the radius squared
-		distVec.multiplyScalar(1.0 - ((distVec.mag()*distVec.mag())/(this.radiusSq)))
+		distVec.multiplyScalar(1.0 - ((vector.mag(distVec)*vector.mag(distVec)/(this.rSq))))
 
 		//scale the resulting distance vector by strength and add this to the particles force vector
 		particle.forceVec.add(distVec.multiplyScalar(this.strength));

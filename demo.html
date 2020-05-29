@@ -8,17 +8,19 @@
 	<script type="text/javascript" src="vector.js"></script>
 
 	<script type="text/javascript" src="engine/particle.js"></script>
+	<script type="text/javascript" src="engine/boundary.js"></script>
 	<script type="text/javascript" src="engine/physics.js"></script>
 
 	<script type="text/javascript" src="behaviour/behaviour.js"></script>
-	<script type="text/javascript" src="behaviour/constant_force.js"></script>
+	<script type="text/javascript" src="behaviour/pool-behaviour.js"> </script>
+	<script type="text/javascript" src="behaviour/constant-force.js"></script>
 	<script type="text/javascript" src="behaviour/attraction.js"> </script>
 	<script type="text/javascript" src="behaviour/collision.js"> </script>
 
-	<script type="text/javascript" src="demos/attraction_demo.js"> </script>
-	<script type="text/javascript" src="demos/collision_demo.js"> </script>
-	<script type="text/javascript" src="demos/messy_demo.js"> </script>
-
+	<script type="text/javascript" src="demos/demo.js"> </script>
+	<script type="text/javascript" src="demos/attraction-demo.js"> </script>
+	<script type="text/javascript" src="demos/collision-demo.js"> </script>
+	<script type="text/javascript" src="demos/messy-demo.js"> </script>
 
 
 	<script type="text/javascript" src="renderer/webglrend.js"></script>
@@ -40,9 +42,11 @@
 
 		<script type="text/javascript">
 			//create and initialize the demos
-			demo1 = new attraction_demo("demo1");
-			demo2 = new collision_demo("demo2");
-			demo3 = new messy_demo("demo3");
+			demo1 = new AttractionDemo("demo1");
+			demo2 = new BilliardDemo("demo2");
+			demo3 = new ClosedSystemDemo("demo3");
+
+			demo2.init()
 
 			//create functions to "draw" each demo such that window can request animation frame
 			function drawDemo1() {

@@ -1,10 +1,16 @@
 //apply a constant force to given particles
-constant_force = function(force) {
+/*class ConstantForce extends Behaviour {
+	constructor()
+}*/
+
+ConstantForce = function(force) {
 	this.force = force || new vector();
 
 	this.apply = function(particle) {
 		//add force property to particle
-		particle.forceVec.add(force);
+		particle.forceVec.add(this.force);
+		
+		//return force
 	}
 }
 

@@ -13,7 +13,7 @@ What can you do with this engine?
 
 -Linear boundaries supporting impulse based particle collisions
 
-Features
+#### Features
 
 -Verlet integration of position
 

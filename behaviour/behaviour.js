@@ -1,3 +1,15 @@
+/*
+Behaviour class
+
+Description:
+
+Although not fully finished, a Behaviour is something that modifies the forceVec of 
+select particles. For it to work, the Behaviour is added to a particle's Behaviours array, and the
+instance of the Physics class will have a loop to apply all Behaviours particle's have for each particle.
+
+
+*/
+
 class Behaviour {
 
 	constructor() {

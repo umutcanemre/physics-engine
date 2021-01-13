@@ -1,3 +1,21 @@
+/*
+
+vector class
+
+Description:
+
+A class that has an x and a y property which represents a 2d array. Has numerous static and instance
+methods to handle vector operations. Static methods are for performing some operation on one or more
+vectors and returning a new vector that is the result, and not modifying the inputs. Instance methods are
+for conviently applying an operation to an existing instance of a vector to modify it.
+
+Constructor:
+
+x -> number, y -> number
+
+*/
+
+
 //object to store practical and convienient vector operations
 class vector {
 	//arithmetic vector operations between two vectors
@@ -96,7 +114,7 @@ class vector {
 
 	//copy the contents of given vector v into this one
 	clone() {
-		return this;
+		return new vector(this.x, this.y);
 	}
 
 	//multiply this vector by a scalar value and also return the result
@@ -128,7 +146,4 @@ class vector {
 		this.y /= m;
 		return this;
 	}
-
 }
-
-// export {vector};

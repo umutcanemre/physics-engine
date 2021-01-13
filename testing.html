@@ -65,11 +65,7 @@
 
 
 			function main() {
-				//a = new vector()
-
-				//console.log(vector.add(new vector(12, 12), new vector(12, 12)))
-				test = new Boundary([new vector(50, 50), new vector])
-				console.log(test.normalAxis)
+	
 
 
 				const canvas = document.querySelector("#cont");
@@ -98,6 +94,9 @@
 					tempParticle = new Particle(1,10)
 					tempParticle.behaviours.push()
 
+					//tempParticle.pos = new vector((Math.random())*620, 240)
+					//tempParticle.velocity = new vector(Math.random()*2, 0)
+
 					tempParticle.color = [Math.random()*(1-0.5)+0.5,Math.random()*(1-0.5)+0.5,Math.random(),1].toString()
 
 					phys.particles.push(tempParticle)
@@ -106,25 +105,45 @@
 					worldBoundCol.pool.push(tempParticle)
 				}
 
-				worldBoundCol.boundPool.push([new vector(495, 480), new vector(495,0)])
+				worldBound = new Boundary([new vector(0,0), new vector(400, 400)])
+
+				worldBoundCol.boundPool.push(
+					new Boundary([new vector(0,0), new vector(0, 50)]),
+					new Boundary([new vector(640, 0), new vector(640, 50)])
+				)
 
 
 
-				phys.particles[0].velocity = new vector(-1,0)
-				//phys.particles[1].velocity = new vector(-0.5,0)
+				phys.particles[0].velocity = new vector(3,0)
+				phys.particles[0].pos = new vector(100, 240);
+				/*phys.particles[1].velocity = new vector(0,0)
+				phys.particles[2].velocity = new vector(0,0)
 
-				phys.particles[0].pos = new vector(500, 240);
+				
+
+				phys.particles[1].pos = new vector(320, 240);
+
+				phys.particles[2].pos = new vector(340, 240);
+
+				phys.particles[3].pos = new vector(360, 240);*/
 
 				/*phys.particles[4].pos = new vector(300, 220);
 				phys.particles[5].pos = new vector(320, 220);
-				phys.particles[1].pos = new vector(290, 240);
+				
 
-				phys.particles[2].pos = new vector(330, 240);
+				
 				phys.particles[3].pos = new vector(310, 240);*/
 
 
-				function draw() { 
+				function draw() {
+					let KE = 0; 
+					let P = 0;
 					
+					for (var i = 0; i < phys.particles.length; i++) {
+						KE += 2*phys.particles[i].mass*vector.mag(phys.particles[i].velocity)*vector.mag(phys.particles[i].velocity)*0.5
+						P += phys.particles[i].mass*vector.mag(phys.particles[i].velocity)
+					}
+					console.log("Kinetic Energy: " + KE + " Momentum: " + P)
 					//console.log(vector.mag(phys.particles[0].velocity))
 					phys.step()
 					ohno.render(phys.particles)

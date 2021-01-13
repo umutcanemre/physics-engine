@@ -1,3 +1,27 @@
+/* 
+
+Physics class
+
+Description:
+
+Main body of the engine. Stores array of all particles, poolBehaviours and stores elapsed time. Handles
+integrating forces acting on particle's and their velocities to update their positions, and applying all
+appropriate behaviours to appropriate particles to update the forces acting on them at each step.
+
+Integration is done through a velocity verlet method, up to the second direvative of position. This may be done
+to arbitratily many direvatives of position which gives slightly greater accuracy but increases computation time.
+Integrating up to the acceleration with the velocity verlet method is reasonably accurate for the purposes of this 
+engine. The main idea is the integrate the acceleration at an instant into velocity and add it to the particles velocity.
+Then integrate the particle's new velocity and acceleration into positional change and add it to the position. The verlet
+method just comes from a Taylor series expansion of position and its time direvatives about the current step to predict the
+following step.
+
+Constructor:
+
+particles -> an array of instances of Particle class, default value is an empty array
+
+*/
+
 Physics = function(particles) {
 	//store particles
 	this.particles = particles || [];
@@ -55,11 +79,6 @@ Physics = function(particles) {
 
 			//particle.snap = vector.subtract(particle.jerk, particle.old.jerk)
 
-			//console.log(particle.forceVec.x)
-
-			
-
-			
 
 			//add to total elapsed time
 			this.elapsed += 1/60

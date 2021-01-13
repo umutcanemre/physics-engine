@@ -1,4 +1,21 @@
 var Webglrend = {}
+//This code has not changed at all since last year
+
+/*
+
+Webglrend class
+
+Description:
+
+Class that handles rendering all particles with their appropriate size, colors and positions
+on a canvas object using webgl. The render method is meant to be called at every step of the Physics
+simulation.
+
+Constructor:
+
+canvas -> reference to a canvas on a webpage
+
+*/
 
 Webglrend = (function(canvas) {		
 	const gl = canvas.getContext("webgl");

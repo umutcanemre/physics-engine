@@ -18,9 +18,6 @@
 	<script type="text/javascript" src="behaviour/collision.js"> </script>
 
 	<script type="text/javascript" src="demos/demo.js"> </script>
-	<script type="text/javascript" src="demos/attraction-demo.js"> </script>
-	<script type="text/javascript" src="demos/collision-demo.js"> </script>
-	<script type="text/javascript" src="demos/messy-demo.js"> </script>
 
 
 	<script type="text/javascript" src="renderer/webglrend.js"></script>
@@ -33,42 +30,35 @@
 		<p style="text-align: center;">The following are some quick demos to demonstrate the functionality of the library</p>
 		<br>
 
-		<h3>Central Attraction Demo: All Particles are the Same Mass, No collisions</h3>
+		<h3>Central Attraction Demo: All Particles are the Same Mass, Collisions and Central Attraction</h3>
 		<canvas id="demo1" width="640" height="480" > </canvas>
-		<h3>Collision Demo: Two Particles of Identical Masses With a Central Attraction</h3>
+		<h3>Collision Demo: Two Particles of Identical Masses With a Central Attraction and Collision (both are constantly accelerating towards the center)</h3>
 		<canvas id="demo2" width="640" height="480" > </canvas>
-		<h3>Messy Demo: Collision, Central Attraction, Many Particles of Varying Masses</h3>
+		<h3>Closed System Demo: Collision with Static Boundaries, no Inter Particle Collisions. 3000 particles with random mass/size. </h3>
 		<canvas id="demo3" width="640" height="480" > </canvas>
+		<h3>Billiards Demo, Particles arranged like billards with another particle collding with all of them.</h3>
+		<canvas id="demo4" width="640" height="480" > </canvas>
+		<h3>Cradle Demo, Particles arranged a Newton's cradle, Inter Particle Collisions and Collisions with Boundaries left and right of Particles.</h3>
+		<canvas id="demo5" width="640" height="480" > </canvas>
 
 		<script type="text/javascript">
-			//create and initialize the demos
-			demo1 = new AttractionDemo("demo1");
-			demo2 = new BilliardDemo("demo2");
-			demo3 = new ClosedSystemDemo("demo3");
-
-			demo2.init()
-
-			//create functions to "draw" each demo such that window can request animation frame
-			function drawDemo1() {
-				demo1.draw()
-				window.requestAnimationFrame(drawDemo1)
-			}
-
-			function drawDemo2() {
-				demo2.draw()
-				window.requestAnimationFrame(drawDemo2)
-			}
-
+			//global demos array
+			var demos = [new AttractionDemo("demo1"), new CollisionDemo("demo2"), new ClosedSystemDemo("demo3"), new BilliardDemo("demo4"), new CradleDemo("demo5")];
 			
-			function drawDemo3() {
-				demo3.draw()
-				window.requestAnimationFrame(drawDemo3)
+			//initialize the demos
+			for (var i = 0; i < demos.length; i++) {
+				demos[i].init()
 			}
-			
-			//start drawing each demo
-			drawDemo1()
-			drawDemo2()
-			drawDemo3()
+
+			//function to draw all demos
+			function drawDemos() {
+				for (var i = 0; i < demos.length; i++) {
+					demos[i].draw()
+				}
+				window.requestAnimationFrame(drawDemos)
+			}
+
+			drawDemos()
 
 		</script>
 

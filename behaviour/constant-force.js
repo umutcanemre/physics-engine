@@ -1,21 +1,22 @@
-//apply a constant force to given particles
-/*class ConstantForce extends Behaviour {
-	constructor()
-}*/
+//apply a constant force to given particles, extends behaviour
 
-ConstantForce = function(force) {
-	this.force = force || new vector();
+/*
 
-	this.apply = function(particle) {
+Constructor:
+
+force -> number for how strong the force is
+
+*/
+
+class ConstantForce extends Behaviour {
+	
+	constructor(force) {
+		super();
+		this.force = force || new vector();
+	}
+
+	apply() {
 		//add force property to particle
 		particle.forceVec.add(this.force);
-		
-		//return force
 	}
 }
-
-//
-
-//behaviour.call(constant_force.prototype)
-
-//constant_force.prototype.apply

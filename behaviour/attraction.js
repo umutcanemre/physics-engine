@@ -1,12 +1,24 @@
-//apply a positive/negative force to particles based on their position relative to the "attraction"
-class Attraction {
+//apply a positive/negative force to particles based on their position relative to the "attraction." Essentially, imagine
+//each particle has a force vector pointing towards the attraction at all times with the same magnitude regardless of position.
+//This is a Behaviour, which means that particles must individually have an instance of this class added to their
+//behaviours array for the particles to obey the attraction.
 
-	constructor(strength, radius, pos) {
+/*
+
+Constructor:
+
+strength -> number to represent how strong the attraction will be, pos -> vector with coordinates of position of vector
+
+*/
+class Attraction extends Behaviour{
+
+	constructor(strength, pos) {
+		super();
 		this.strength = strength || null;
 		this.pos = pos || new vector();
-		this.r = 1000 || radius;
+		//this.r = 1000 || radius;
 		//set radiusSq to avoid needlessly computing the radius squared
-		this.rSq = this.r * this.r
+		//this.rSq = this.r * this.r
 	}
 
 	set radius(r) {
@@ -21,26 +33,9 @@ class Attraction {
 		//normalize distance vector
 		distVec.normalize()
 
-		//multiply distance vector by 1 - the squared magnitude of distance vector over the radius squared
-		distVec.multiplyScalar(1.0 - ((vector.mag(distVec)*vector.mag(distVec)/(this.rSq))))
-
 		//scale the resulting distance vector by strength and add this to the particles force vector
-		particle.forceVec.add(distVec.multiplyScalar(this.strength));
+		distVec.multiplyScalar(this.strength)
 
-		/* Old attraction
-		distVec = vector.subtract(this.pos, particle.pos);
-
-		theta = Math.atan(distVec.y/distVec.x)
-
-		nforce = this.strength/(distVec.mag()*distVec.mag())
-
-		forceVec = new vector(nforce*Math.cos(theta)*Math.sign(distVec.x), nforce*Math.sin(theta)*Math.sign(distVec.y) )
-
-		particle.forceVec.add(forceVec);
-
-
-
-		*/
-
+		particle.forceVec.add(distVec);
 	}
 }
